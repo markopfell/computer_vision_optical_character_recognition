@@ -1,12 +1,14 @@
-import skimage as ski
-import matplotlib
+import skimage
+import os.path
+from matplotlib import pyplot as plt
 
-image = ski.data.coins()
-# ... or any other NumPy array!
-edges = ski.filters.sobel(image)
-ski.io.imshow(edges)
-ski.io.show()
+image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page1.jpeg"
 
+print(os.path.isfile(image_file_name))
+
+image = skimage.io.imread(image_file_name)
+plt.imshow(image)
+plt.show()
 
 def read_truth_image():
     return
