@@ -31,12 +31,15 @@ def extract_position(_image, _template):
 def output_positions(image_file_name, positions):
     image_title = (image_file_name.split("/"))[-1]
 
+    print('\n')
+    print('------------------- Output start -------------------')
     print(image_title)
     print("Note: matching pixel coordinates given x_min , y_min")
 
     for i, coordinate in enumerate(positions):
         x, y = coordinate
         print(i+1,"at: ", x, ",", y)
+    print('-------------------- Output end --------------------')
 
     return
 
@@ -63,14 +66,16 @@ image = read_image(image_file_name)
 # UR ( ,y) to LR ( ,y) = xmin to xmax
 one_coordinates_min = (690, 90)
 one_coordinates_max = (720, 140)
-two_coordinates_min = (690, 90)
-two_coordinates_max = (720, 140)
-three_coordinates_min = (690, 90)
-three_coordinates_max = (720, 140)
+two_coordinates_min = (680, 978)
+two_coordinates_max = (710, 1020)
+three_coordinates_min = (665, 1291)
+three_coordinates_max = (695, 1331)
 
-templates_coordinates = [[one_coordinates_min, one_coordinates_max],
+templates_coordinates = [
+                         [one_coordinates_min, one_coordinates_max],
                          [two_coordinates_min, two_coordinates_max],
-                         [three_coordinates_min, three_coordinates_max]]
+                         [three_coordinates_min, three_coordinates_max],
+                         ]
 ##
 
 position_coordinates = multiple_templates_positions(templates_coordinates)
@@ -80,7 +85,10 @@ output_positions(image_file_name, position_coordinates)
 def test_image_read():
     x, y, d = image.shape
     print(x, y)
-    template = crop_template_from_image(image, one_coordinates_min, one_coordinates_max)
+
+    #template = crop_template_from_image(image, one_coordinates_min, one_coordinates_max)
+    #template = crop_template_from_image(image, two_coordinates_min, two_coordinates_max)
+    template = crop_template_from_image(image, three_coordinates_min, three_coordinates_max)
 
     plt.imshow(template)
     plt.show()
