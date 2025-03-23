@@ -60,31 +60,33 @@ def multiple_templates_positions(_templates_coordinates):
     return _position_coordinates
 
 
+def manual_template_coordinates():
+    # (double x to account for double-digit numbers from single digit)
+    # reading from matplotlib x and y are flipped:
+    # UL (x, ) to UR (x, ) = y_min to y_max
+    # UR ( ,y) to LR ( ,y) = x_min to x_max
+    one_coordinates_min = (690, 90)
+    one_coordinates_max = (720, 140)
+    two_coordinates_min = (680, 978)
+    two_coordinates_max = (710, 1020)
+    three_coordinates_min = (665, 1291)
+    three_coordinates_max = (695, 1331)
+
+    _templates_coordinates = [
+        [one_coordinates_min, one_coordinates_max],
+        [two_coordinates_min, two_coordinates_max],
+        [three_coordinates_min, three_coordinates_max],
+    ]
+    ##
+
+    return _templates_coordinates
+
+
 start_time = timeit.default_timer()
 
 image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page1.png"
-
 image = read_image(image_file_name)
-
-# TODO: Clean this up
-# (double x to account for double digit numbers from single digit)
-# reading from matplotlib x and y are flipped:
-# UL (x, ) to UR (x, ) = y_min to y_max
-# UR ( ,y) to LR ( ,y) = x_min to x_max
-one_coordinates_min = (690, 90)
-one_coordinates_max = (720, 140)
-two_coordinates_min = (680, 978)
-two_coordinates_max = (710, 1020)
-three_coordinates_min = (665, 1291)
-three_coordinates_max = (695, 1331)
-
-templates_coordinates = [
-                         [one_coordinates_min, one_coordinates_max],
-                         [two_coordinates_min, two_coordinates_max],
-                         [three_coordinates_min, three_coordinates_max],
-                         ]
-##
-
+templates_coordinates = manual_template_coordinates()
 position_coordinates = multiple_templates_positions(templates_coordinates)
 output_positions(image_file_name, position_coordinates, start_time)
 
@@ -93,9 +95,7 @@ def test_image_read():
     x, y, d = image.shape
     print(x, y)
 
-    # template = crop_template_from_image(image, one_coordinates_min, one_coordinates_max)
-    # template = crop_template_from_image(image, two_coordinates_min, two_coordinates_max)
-    template = crop_template_from_image(image, three_coordinates_min, three_coordinates_max)
+    template = crop_template_from_image(image, templates_coordinates[2][0], templates_coordinates[2][1])
 
     plt.imshow(template)
     plt.show()
