@@ -25,7 +25,7 @@ def crop_template_from_image(_image, _template_coordinates_min, _template_coordi
     return _template
 
 def extract_position(_image, _template):
-    _result = match_template(image, template)
+    _result = match_template(image, _template)
     ij = numpy.unravel_index(numpy.argmax(_result), _result.shape)  # referenced to (x_min, y_min)
     (x, y, d) = ij
     coordinate = (x, y)
@@ -46,23 +46,28 @@ def output_positions(image_file_name, positions):
     return
 
 
-ONE_COORDINATES_MIN = (690, 90)
-ONE_COORDINATES_MAX = (720, 140)
+def multiple_templates_positions(_templates_coordinates):
+    _position_coordinates = []
+
+    for _template_coordinates in _templates_coordinates:
+        _coordinates_min, _coordinates_max = _template_coordinates
+        _template = crop_template_from_image(image, _coordinates_min, _coordinates_max)
+        _position_coordinates.append(extract_position(image, _template))
+
+    return _position_coordinates
+
 
 image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page1.png"
 
 image = read_image(image_file_name)
 
-templates_coordinates = [[ONE_COORDINATES_MIN, ONE_COORDINATES_MAX],
-                         [ONE_COORDINATES_MIN, ONE_COORDINATES_MAX]]
+one_coordinates_min = (690, 90)
+one_coordinates_max = (720, 140)
 
-position_coordinates = []
+templates_coordinates = [[one_coordinates_min, one_coordinates_max],
+                         [one_coordinates_min, one_coordinates_max]]
 
-for template_coordinates in templates_coordinates:
-    coordinates_min, coordinates_max = template_coordinates
-    template = crop_template_from_image(image, coordinates_min, coordinates_max)
-    position_coordinates.append(extract_position(image, template))
-
+position_coordinates = multiple_templates_positions(templates_coordinates)
 output_positions(image_file_name, position_coordinates)
 
 
