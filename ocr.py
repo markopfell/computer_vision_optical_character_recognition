@@ -45,16 +45,25 @@ def output_positions(image_file_name, positions):
 
     return
 
+
 ONE_COORDINATES_MIN = (690, 90)
 ONE_COORDINATES_MAX = (720, 140)
 
 image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page1.png"
 
 image = read_image(image_file_name)
-template = crop_template_from_image(image, ONE_COORDINATES_MIN, ONE_COORDINATES_MAX)
 
-coordinate = extract_position(image, template)
-output_positions(image_file_name, [coordinate, coordinate])
+templates_coordinates = [[ONE_COORDINATES_MIN, ONE_COORDINATES_MAX],
+                         [ONE_COORDINATES_MIN, ONE_COORDINATES_MAX]]
+
+position_coordinates = []
+
+for template_coordinates in templates_coordinates:
+    coordinates_min, coordinates_max = template_coordinates
+    template = crop_template_from_image(image, coordinates_min, coordinates_max)
+    position_coordinates.append(extract_position(image, template))
+
+output_positions(image_file_name, position_coordinates)
 
 
 def test_image_read():
@@ -66,9 +75,4 @@ def test_image_read():
     plt.imshow(image)
     plt.show()
 
-    return
-
-def test_image_template_match():
-    plt.imshow(result, cmap='magma')
-    plt.show()
     return
