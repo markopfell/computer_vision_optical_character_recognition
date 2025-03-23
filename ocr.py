@@ -12,11 +12,6 @@ def read_image(image_file_name):
 
 
 def crop_template_from_image(_image, _template_coordinates_min, _template_coordinates_max):
-    # one (double x to account for double digit numbers )
-    # reading from matplotlib x and y are flipped:
-    # UL (x, ) to UR (x, ) = ymin to ymax
-    # UR ( ,y) to LR ( ,y) = xmin to xmax
-
     x_min, y_min = _template_coordinates_min
     x_max, y_max = _template_coordinates_max
 
@@ -61,11 +56,22 @@ image_file_name = "/Users/mark/computer_vision_optical_character_recognition/sou
 
 image = read_image(image_file_name)
 
+## TODO: Clean this up
+# (double x to account for double digit numbers from single digit)
+# reading from matplotlib x and y are flipped:
+# UL (x, ) to UR (x, ) = ymin to ymax
+# UR ( ,y) to LR ( ,y) = xmin to xmax
 one_coordinates_min = (690, 90)
 one_coordinates_max = (720, 140)
+two_coordinates_min = (690, 90)
+two_coordinates_max = (720, 140)
+three_coordinates_min = (690, 90)
+three_coordinates_max = (720, 140)
 
 templates_coordinates = [[one_coordinates_min, one_coordinates_max],
-                         [one_coordinates_min, one_coordinates_max]]
+                         [two_coordinates_min, two_coordinates_max],
+                         [three_coordinates_min, three_coordinates_max]]
+##
 
 position_coordinates = multiple_templates_positions(templates_coordinates)
 output_positions(image_file_name, position_coordinates)
@@ -74,6 +80,8 @@ output_positions(image_file_name, position_coordinates)
 def test_image_read():
     x, y, d = image.shape
     print(x, y)
+    template = crop_template_from_image(image, one_coordinates_min, one_coordinates_max)
+
     plt.imshow(template)
     plt.show()
 
