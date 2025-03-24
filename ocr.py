@@ -124,7 +124,7 @@ ax.imshow(cropped_image)
 #
 # plt.gca().add_patch(rect3)
 
-
+# note
 color = iter(cm.rainbow(numpy.linspace(0, 1, len(position_coordinates))))
 
 for i, position_coordinate in enumerate(position_coordinates):
