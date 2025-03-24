@@ -1,15 +1,20 @@
-from PyPDF2 import PdfWriter, PdfReader
+import fitz # PyMuPDF
 
-document_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1/Sample 1.pdf"
+document_file_name = '/Users/mark/computer_vision_optical_character_recognition/source/Sample 1/Sample 1.pdf'
+split_document_images_folder = '/Users/mark/computer_vision_optical_character_recognition/source/Sample 1/Sample 1 split images/'
+document_title, document_extension = (document_file_name.split('/')[-1]).split('.')
+dpi = 300 # guess ... it's slow though
 
-document_name_and_extension = document_file_name.split('/')[-1]
-document_name, extension = document_name_and_extension.split('.')
-print(document_name)
+pdffile = document_file_name
+doc = fitz.open(pdffile)
 
-inputpdf = PdfReader(open(document_file_name, "rb"))
+for i, _ in enumerate(doc.pages()):
+    page = doc.load_page(i)
 
-for i in range(len(inputpdf.pages)):
-    output = PdfWriter()
-    output.add_page(inputpdf.pages[i])
-    with open(str(document_name) + "-page%s.pdf" % i, "wb") as outputStream:
-        output.write(outputStream)
+    text = page.get_text()
+
+    pix = page.get_pixmap(dpi=dpi)
+    output_pixels = f'{split_document_images_folder}{document_title}-page{i}.png'
+    pix.save(output_pixels)
+doc.close()
+
