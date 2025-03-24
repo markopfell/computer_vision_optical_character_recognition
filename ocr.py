@@ -72,12 +72,12 @@ def manual_template_coordinates():
     # reading from matplotlib x and y are flipped:
     # UL (x, ) to UR (x, ) = y_min to y_max
     # UR ( ,y) to LR ( ,y) = x_min to x_max
-    one_coordinates_min = (690, 90)
-    one_coordinates_max = (720, 140)
-    two_coordinates_min = (680, 978)
-    two_coordinates_max = (710, 1020)
-    three_coordinates_min = (665, 1291)
-    three_coordinates_max = (695, 1331)
+    one_coordinates_min = (675, 75)
+    one_coordinates_max = (735, 155)
+    two_coordinates_min = (665, 965)
+    two_coordinates_max = (725, 1035)
+    three_coordinates_min = (665, 1275)
+    three_coordinates_max = (725, 1345)
 
     _templates_coordinates = [
         [one_coordinates_min, one_coordinates_max],
@@ -136,10 +136,11 @@ for i, position_coordinate in enumerate(position_coordinates):
                                   templates[i].shape[1],
                                   templates[i].shape[0],
                                   edgecolor=c,
-                                  facecolor='none')
+                                  facecolor='none',
+                                  label=i+1)
     plt.gca().add_patch(template_rect)
 
-
+plt.legend()
 plt.show()
 
 
@@ -148,13 +149,13 @@ def test_image_read():
     # x, y, d = image.shape
     # print(x, y)
     #
-    # template = crop_template_from_image(image, templates_coordinates[2][0], templates_coordinates[2][1])
-    #
-    # plt.imshow(template)
-    # plt.show()
+    template = crop_template_from_image(template_image, templates_coordinates[2][0], templates_coordinates[2][1])
+
+    plt.imshow(template)
+    plt.show()
     #
     # plt.imshow(image)
-    plt.imshow(image[0:900, 0:image.shape[1]]) #this crop works
-    plt.show()
+    # plt.imshow(image[0:900, 0:image.shape[1]]) #this crop works
+    # plt.show()
 
     return
