@@ -25,14 +25,16 @@ def template_numbers(_raw_flat_table_text):
 
     template_numbers = []
     for j, row in enumerate(table_text):
-        if len(row) >= template_number_column + 1 and j > 0:
+        if len(row) >= template_number_column + 1 and j > 0 and row[template_number_column].isnumeric() == True:
+            # print(template_number_column, '|',repr(row[template_number_column]),'|')
             template_numbers.append(int(row[template_number_column]))
+            # print(template_numbers)
 
-    return(max(template_numbers))
+    return max(template_numbers)
 
 
-document_file_name = '/Users/mark/computer_vision_optical_character_recognition/source/Sample 1/Sample 1.pdf'
-split_document_images_folder = '/Users/mark/computer_vision_optical_character_recognition/source/Sample 1/Sample 1 split images/'
+document_file_name = '/Users/mark/computer_vision_optical_character_recognition/source/Sample 2/Sample 2.pdf'
+split_document_images_folder = '/Users/mark/computer_vision_optical_character_recognition/source/Sample 2/Sample 2 split images/'
 document_title, document_extension = (document_file_name.split('/')[-1]).split('.')
 dpi = 300 # guess ... it's slow though
 key_character = '#'
@@ -61,11 +63,11 @@ for i, _ in enumerate(doc.pages()):
     #     output.write(text)
 
     pix = page.get_pixmap(dpi=dpi)
-    output_pixels = f'{split_document_images_folder}{document_title}-page{i}.png'
+    output_pixels = f'{split_document_images_folder}{document_title}-page{i}.jpg'
     pix.save(output_pixels)
 
 doc.close()
 # [[11, 0], [16, 1], [17, 2], [13, 3], [15, 4], [17, 5], [7, 6], [4, 7], [3, 8], [9, 9], [4, 10]]
-print(maximum_number_of_templates_page)
+print('maximum number of templates and page: ', maximum_number_of_templates, maximum_number_of_templates_page)
 
 

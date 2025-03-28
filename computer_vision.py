@@ -98,8 +98,8 @@ def crop(_image, y_max):
 start_time = timeit.default_timer()
 fig, ax = plt.subplots()
 
-image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page2.png"
-template_image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page1.png"
+image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page2.jpg"
+template_image_file_name = "/Users/mark/computer_vision_optical_character_recognition/source/Sample 1_page1.jpg"
 
 crop_y_max_pixel = 900  # Need this to prune the false positives from the legend in the document
 image = read_image(image_file_name)
